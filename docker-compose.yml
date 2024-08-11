@@ -14,14 +14,17 @@ services:
     networks:
       - my_network
     restart: unless-stopped
-    ports: 
-      - "2053:2053"
+    ports:
+      - "443:2053"  # Добавлено: переадресация порта 443 на 2053
+      - "2053:2053"  # Не обязательно, если вы не используете 2053 напрямую
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.3x-ui.rule=Host(`vpn.automateme.ru`)"
-      - "traefik.http.routers.3x-ui.entrypoints=websecure" 
-      - "traefik.http.routers.3x-ui.tls.certresolver=letsencrypt"
-      - "traefik.http.services.3x-ui.loadbalancer.server.port=2053" 
+      - "traefik.http.routers.3x-ui-http.rule=Host(`vpn.automateme.ru`) && PathPrefix(`/`) && EntryPoint(`http`)"
+      - "traefik.http.routers.3x-ui-http.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.3x-ui-https.rule=Host(`vpn.automateme.ru`) && PathPrefix(`/`) && EntryPoint(`https`)"
+      - "traefik.http.routers.3x-ui-https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.3x-ui.loadbalancer.server.port=2053"
 
 networks:
   my_network:
