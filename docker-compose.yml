@@ -1,8 +1,10 @@
+version: "3"
+
 services:
   3x-ui:
     image: 'ghcr.io/mhsanaei/3x-ui:latest'
     container_name: 3x-ui
-    hostname: https://vpn.automateme.ru
+    hostname: vpn.automateme.ru  # Изменено: убран https://
     volumes:
       - '/home/user/3x-ui/db:/etc/x-ui/'
       - '/home/user/3x-ui/cert:/root/cert/'
@@ -10,8 +12,7 @@ services:
       XRAY_VMESS_AEAD_FORCED: 'false'
     tty: true
     networks:
-      my_network:
-        external: true
+      - my_network
     restart: unless-stopped
 
 networks:
