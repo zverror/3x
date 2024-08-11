@@ -4,7 +4,7 @@ services:
   3x-ui:
     image: ghcr.io/mhsanaei/3x-ui:latest
     container_name: 3x-ui
-    hostname: yourhostname
+    hostname: vpn.automateme.ru
     volumes:
       - /home/user/3x-ui/db:/etc/x-ui/
       - /home/user/3x-ui/cert:/root/cert/
