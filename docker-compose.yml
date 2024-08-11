@@ -4,7 +4,7 @@ services:
   3x-ui:
     image: 'ghcr.io/mhsanaei/3x-ui:latest'
     container_name: 3x-ui
-    hostname: vpn.automateme.ru  # Изменено: убран https://
+    hostname: vpn.automateme.ru
     volumes:
       - '/home/user/3x-ui/db:/etc/x-ui/'
       - '/home/user/3x-ui/cert:/root/cert/'
@@ -14,6 +14,14 @@ services:
     networks:
       - my_network
     restart: unless-stopped
+    ports: 
+      - "2053:2053"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.3x-ui.rule=Host(`vpn.automateme.ru`)"
+      - "traefik.http.routers.3x-ui.entrypoints=websecure" 
+      - "traefik.http.routers.3x-ui.tls.certresolver=letsencrypt"
+      - "traefik.http.services.3x-ui.loadbalancer.server.port=2053" 
 
 networks:
   my_network:
