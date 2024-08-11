@@ -19,10 +19,10 @@ services:
       - "2053:2053"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.3x-ui-http.rule=Host(`vpn.automateme.ru`) && PathPrefix(`/`) && EntryPoint(`http`)"
-      - "traefik.http.routers.3x-ui-http.middlewares=redirect-to-https"
+      - "traefik.http.routers.3x-ui-http.rule=Host(`vpn.automateme.ru`)"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.3x-ui-https.rule=Host(`vpn.automateme.ru`) && PathPrefix(`/`) && EntryPoint(`https`)"
+      - "traefik.http.routers.3x-ui-http.middlewares=redirect-to-https"
+      - "traefik.http.routers.3x-ui-https.rule=Host(`vpn.automateme.ru`)"
       - "traefik.http.routers.3x-ui-https.tls.certresolver=letsencrypt"
       - "traefik.http.services.3x-ui.loadbalancer.server.port=2053"
 
