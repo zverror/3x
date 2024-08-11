@@ -15,8 +15,8 @@ services:
       - my_network
     restart: unless-stopped
     ports:
-      - "443:2053"  # Добавлено: переадресация порта 443 на 2053
-      - "2053:2053"  # Не обязательно, если вы не используете 2053 напрямую
+      - "4443:443"
+      - "2053:2053"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.3x-ui-http.rule=Host(`vpn.automateme.ru`) && PathPrefix(`/`) && EntryPoint(`http`)"
